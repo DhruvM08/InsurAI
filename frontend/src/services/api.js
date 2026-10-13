@@ -459,85 +459,40 @@ export const fetchAllFeedback = async () => {
 };
 
 export const generateAIChatResponse = async (userMessage, history = [], userContext = {}) => {
-  const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
-  const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-
-  if (!GROQ_API_KEY) {
-    console.error('Groq API Key is missing in .env file');
-    return {
-      success: false,
-      message: "Chatbot configuration error. Please contact administrator."
-    };
-  }
-
   try {
-    const { name, email, policies = [], appointments = [] } = userContext;
+    const { name, email } = userContext || {};
 
-    const messages = [
-      {
-        role: "system",
-        content: `You are the InsuAI Assistant, an intelligent support partner for the InsurAI platform. 
-InsurAI is a modern insurance management platform bridging the gap between users, agents, and administrators.
-
-Current User Context:
-- Name: ${name || 'Valued User'}
-- Email: ${email || 'Not provided'}
-- Active Policies: ${policies.length > 0 ? policies.map(p => `${p.policyTypeName} (${p.status})`).join(', ') : 'No active policies'}
-- Upcoming Appointments: ${appointments.length > 0 ? appointments.map(a => `${a.slot.startTime} with Agent ${a.agent.name}`).join(', ') : 'No upcoming appointments'}
-
-Key Features of InsurAI:
-- Users: Discover policies (Health, Life, Auto, etc.), apply for policies, book appointments with agents, and provide feedback.
-- Agents: Manage availability, track requests, view client feedback, and create new policy offerings.
-- Admins: Monitor system health, manage users/agents, and oversee policy applications globally.
-
-Policy Offerings Knowledge:
-- Health: Individual Star Health, Family Floater Plus, Senior Citizen Care.
-- Life: Term Life Protection.
-- Auto: Premium Auto Insurance.
-- Specialized: Business Coverage (SME Protector).
-
-General System Instructions:
-- To book an appointment, users should go to the "Agents" section and select a time slot.
-- To apply for a policy, users should browse "Policy Offerings" and click "Apply".
-- To see their status, users can check "My Policies" or "Appointments" tabs.
-
-Your Goal:
-- Solve real-time queries regarding InsurAI.
-- Provide personalized recommendations based on the user's current policies and appointments.
-- Be professional, empathetic, and efficient.
-- If a query is outside InsurAI's scope, politely redirect them back to insurance topics.
-- Support email: insurai02@gmail.com
-
-Tone: Professional, supportive, and efficient.`
-      },
-      ...history.slice(-10).map(msg => ({ // Send last 10 messages for context
+    const formattedHistory = (history || [])
+      .filter(msg => msg.text)
+      .slice(-10)
+      .map(msg => ({
         role: msg.type === 'user' ? 'user' : 'assistant',
         content: msg.text
-      })),
-      { role: "user", content: userMessage }
-    ];
+      }));
 
-    const response = await axios.post(GROQ_API_URL, {
-      model: "llama-3.3-70b-versatile",
-      messages: messages,
-      temperature: 0.7,
-      max_tokens: 1024,
-    }, {
-      headers: {
-        'Authorization': `Bearer ${GROQ_API_KEY}`,
-        'Content-Type': 'application/json',
-      }
+    const response = await api.post('/ai/chat', {
+      message: userMessage,
+      userEmail: email,
+      userName: name,
+      history: formattedHistory
     });
 
-    return {
-      success: true,
-      text: response.data.choices[0].message.content
-    };
+    if (response.data && response.data.success) {
+      return {
+        success: true,
+        text: response.data.reply
+      };
+    } else {
+      return {
+        success: false,
+        message: response.data?.reply || "Failed to generate AI response."
+      };
+    }
   } catch (error) {
-    console.error('Groq API Error:', error);
+    console.error('Spring AI Backend Error:', error);
     return {
       success: false,
-      message: "I'm having trouble connecting to my brain right now. Please try again later or contact our support team at insurai02@gmail.com."
+      message: error.response?.data?.reply || error.message || "I'm having trouble connecting to my advisory engine. Please try again later or contact our support team at insurai02@gmail.com."
     };
   }
 };

@@ -25,3 +25,10 @@ spring.mail.password=your-app-password
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.debug=false
+
+# Spring AI Configuration (Groq OpenAI-compatible endpoint)
+spring.ai.openai.api-key=${GROQ_API_KEY:gsk_your_groq_api_key_here}
+spring.ai.openai.base-url=https://api.groq.com/openai
+spring.ai.openai.chat.options.model=llama-3.3-70b-versatile
+spring.ai.openai.chat.options.temperature=0.7
+spring.ai.openai.chat.options.max-tokens=1024

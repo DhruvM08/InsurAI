@@ -31,14 +31,18 @@ public class AuthService {
     // Admin Panel Post Request --------------------------------------
     @jakarta.annotation.PostConstruct
     public void seedAdmin() {
-        if (!userDTOREPO.existsByEmail(adminEmail)) {
-            SignupDTO admin = new SignupDTO();
-            admin.setName("System Admin");
-            admin.setEmail(adminEmail);
-            admin.setPassword(passwordEncoder.encode(adminpassword));
-            admin.setRole("Admin");
-            userDTOREPO.save(admin);
-            System.out.println("Admin added successfully.");
+        try {
+            if (!userDTOREPO.existsByEmail(adminEmail)) {
+                SignupDTO admin = new SignupDTO();
+                admin.setName("System Admin");
+                admin.setEmail(adminEmail);
+                admin.setPassword(passwordEncoder.encode(adminpassword));
+                admin.setRole("Admin");
+                userDTOREPO.save(admin);
+                System.out.println("Admin added successfully.");
+            }
+        } catch (Exception e) {
+            System.err.println("Warning: Could not seed admin user on startup (database unreachable): " + e.getMessage());
         }
     }
 

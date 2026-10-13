@@ -52,7 +52,8 @@ public class Securityconfig {
                                 "/InsureAi/feedback/**",
                                 "/api/notifications/**",
                                 "/InsureAi/createPolicyOffering",
-                                "/InsureAi/policyOfferings")
+                                "/InsureAi/policyOfferings",
+                                "/InsureAi/ai/**")
                         .permitAll()// allow these
 
                         .anyRequest().authenticated());
