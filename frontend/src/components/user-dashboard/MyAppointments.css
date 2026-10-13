@@ -1,0 +1,89 @@
+.ud-appointment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ud-appointment-item {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ud-appointment-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border-color: #475569;
+}
+
+.ud-appointment-item-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ud-appointment-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ud-appointment-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ud-appointment-info h3 {
+  margin: 0 0 2px 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #f1f5f9;
+}
+
+.ud-appointment-info p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.ud-appointment-arrow {
+  font-size: 1.25rem;
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.ud-appointment-details {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.ud-appointment-note {
+  margin: 10px 0 0 0;
+  font-size: 0.8125rem;
+  color: #64748b;
+  font-style: italic;
+}
+
+.ud-appointment-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}
+
+.ud-btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8125rem;
+}

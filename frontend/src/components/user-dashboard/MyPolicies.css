@@ -1,0 +1,195 @@
+.ud-policy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ud-policy-item {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ud-policy-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border-color: #475569;
+}
+
+.ud-policy-item-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ud-policy-item-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.ud-policy-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ud-policy-item-info h3 {
+  margin: 0 0 2px 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #f1f5f9;
+}
+
+.ud-policy-item-id {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.ud-policy-item-arrow {
+  font-size: 1.25rem;
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.ud-policy-item-date {
+  margin: 12px 0 0 0;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+/* Tracking Timeline */
+.ud-timeline {
+  margin-top: 24px;
+  position: relative;
+  border-left: 2px solid #334155;
+  margin-left: 12px;
+  padding-left: 24px;
+}
+
+.ud-timeline-step {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.ud-timeline-step:last-child {
+  margin-bottom: 0;
+}
+
+.ud-timeline-marker {
+  position: absolute;
+  left: -33px;
+  /* 24px padding + 2px border + half width of marker */
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #1e293b;
+  border: 2px solid #64748b;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.ud-timeline-step.active .ud-timeline-marker {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.ud-timeline-step.completed .ud-timeline-marker {
+  background: #22c55e;
+  border-color: #22c55e;
+}
+
+.ud-timeline-content {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.ud-timeline-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ud-timeline-date {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.ud-timeline-desc {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+/* Query Feedback Box */
+.ud-query-box {
+  margin-top: 12px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.ud-query-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fbbf24;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ud-query-text {
+  font-size: 0.875rem;
+  color: #e2e8f0;
+}
+
+/* Application Details */
+.ud-app-details {
+  margin-top: 32px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.ud-section-title {
+  margin: 0 0 16px 0;
+  font-size: 0.875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #60a5fa;
+  letter-spacing: 0.05em;
+}
+
+.ud-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.ud-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ud-detail-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.ud-detail-value {
+  font-size: 0.9375rem;
+  color: #f1f5f9;
+  font-weight: 600;
+}

@@ -1,0 +1,234 @@
+.agent-notification-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.agent-notification-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #94a3b8;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.agent-notification-btn:hover,
+.agent-notification-btn.active {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateY(-1px);
+}
+
+.agent-notification-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: #ef4444;
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #0f172a;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+
+.agent-notification-dropdown {
+    position: absolute;
+    top: calc(100% + 15px);
+    right: -50px;
+    width: 380px;
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow: hidden;
+    animation: adDropEnter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes adDropEnter {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.agent-notification-header {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(30, 41, 59, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.agent-notification-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.agent-mark-all-read {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.agent-mark-all-read:hover:not(:disabled) {
+    background: rgba(59, 130, 246, 0.2);
+    transform: translateY(-1px);
+}
+
+.agent-mark-all-read:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.agent-notification-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.agent-notification-item {
+    display: flex;
+    gap: 15px;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.agent-notification-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.agent-notification-item.unread {
+    background: rgba(59, 130, 246, 0.03);
+}
+
+.agent-notification-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(59, 130, 246, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.agent-notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.agent-notification-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-bottom: 4px;
+}
+
+.agent-unread-dot {
+    width: 7px;
+    height: 7px;
+    background: #3b82f6;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+}
+
+.agent-notification-message {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.agent-notification-time {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.agent-notification-close {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: #475569;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+    opacity: 0;
+}
+
+.agent-notification-item:hover .agent-notification-close {
+    opacity: 1;
+}
+
+.agent-notification-close:hover {
+    background: rgba(244, 63, 94, 0.1);
+    color: #f43f5e;
+}
+
+.agent-notification-empty {
+    padding: 50px 20px;
+    text-align: center;
+    color: #64748b;
+}
+
+.agent-notification-empty svg {
+    font-size: 3rem;
+    opacity: 0.2;
+    margin-bottom: 15px;
+}
+
+.agent-notification-empty p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.agent-notification-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.agent-notification-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}

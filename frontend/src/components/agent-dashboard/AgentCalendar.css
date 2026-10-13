@@ -1,0 +1,461 @@
+.calendar-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.calendar-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(30, 41, 59, 0.5);
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cal-nav-btn {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    transition: color 0.2s;
+}
+
+.cal-nav-btn:hover {
+    color: #fff;
+}
+
+.current-month-label {
+    font-weight: 700;
+    color: #f1f5f9;
+    min-width: 140px;
+    text-align: center;
+}
+
+.calendar-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    height: calc(100vh - 280px);
+}
+
+.calendar-card {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 12px;
+}
+
+.weekday-label {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    flex: 1;
+    gap: 8px;
+}
+
+.calendar-day-cell {
+    aspect-ratio: 1;
+    background: rgba(15, 23, 42, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.calendar-day-cell:hover {
+    background: rgba(30, 41, 59, 0.6);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.calendar-day-cell.prev,
+.calendar-day-cell.next {
+    opacity: 0.1;
+    cursor: default;
+}
+
+.calendar-day-cell.today {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.calendar-day-cell.today .day-number {
+    color: #3b82f6;
+    font-weight: 900;
+}
+
+.calendar-day-cell.selected {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+.day-number {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.event-indicators {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+}
+
+.event-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3b82f6;
+}
+
+.event-more {
+    font-size: 0.6rem;
+    color: #64748b;
+    font-weight: 700;
+}
+
+.calendar-sidebar {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.event-panel-header {
+    padding: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.panel-icon {
+    color: #3b82f6;
+    font-size: 1.5rem;
+}
+
+.event-panel-header h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin: 0;
+}
+
+.events-scroll {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.empty-state {
+    text-align: center;
+    color: #64748b;
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.event-item-card {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 16px;
+    position: relative;
+}
+
+.event-item-card.confirmed {
+    border-left: 4px solid #22c55e;
+}
+
+.event-item-card.booked {
+    border-left: 4px solid #f59e0b;
+}
+
+.event-item-card.completed {
+    border-left: 4px solid #3b82f6;
+    opacity: 0.7;
+}
+
+.event-time {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: #60a5fa;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.event-user {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 4px 0;
+}
+
+.event-type {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin: 0 0 12px 0;
+}
+
+.event-status-tag {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+}
+
+.confirmed .event-status-tag {
+    background: rgba(34, 197, 94, 0.1);
+    color: #4ade80;
+}
+
+.event-meta-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.event-category-tag {
+    font-size: 0.65rem;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(96, 165, 250, 0.2);
+    color: #60a5fa;
+    text-transform: uppercase;
+}
+
+.policy-task .event-category-tag {
+    background: rgba(167, 139, 250, 0.2);
+    color: #a78bfa;
+}
+
+.policy-task {
+    border-left: 4px solid #a78bfa !important;
+}
+
+.event-note-bubble {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.event-details-mini {
+    display: flex;
+    gap: 12px;
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.event-meta-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.status-pill .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #94a3b8;
+}
+
+.status-pill.confirmed .dot,
+.status-pill.approved .dot {
+    background: #22c55e;
+}
+
+.status-pill.booked .dot,
+.status-pill.pending .dot {
+    background: #f59e0b;
+}
+
+.status-pill.completed .dot {
+    background: #3b82f6;
+}
+
+.status-pill.rejected .dot {
+    background: #ef4444;
+}
+
+.type-badge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+}
+
+.type-badge.appointment {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.type-badge.policy {
+    background: rgba(167, 139, 250, 0.1);
+    color: #a78bfa;
+    border: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+.event-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.event-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ev-icon {
+    font-size: 1.1rem;
+    color: #64748b;
+    flex-shrink: 0;
+}
+
+.ev-icon.success {
+    color: #22c55e;
+}
+
+.ev-time-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #60a5fa;
+}
+
+.ev-user-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+.ev-desc-text {
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.event-note-wrapper {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 4px;
+}
+
+.note-text {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.policy-id-tag {
+    font-size: 0.7rem;
+    color: rgba(148, 163, 184, 0.4);
+    font-family: monospace;
+    margin-top: 4px;
+}
+
+.policy-task {
+    border-left: 4px solid #a78bfa !important;
+}
+
+.upcoming-summary {
+    margin-top: 12px;
+}
+
+.upcoming-summary h4 {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.deadline-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(30, 41, 59, 0.4);
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.deadline-icon {
+    color: #f59e0b;
+}
+
+.deadline-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.deadline-sub {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}

@@ -1,0 +1,27 @@
+spring.application.name=InsureAi
+
+# MongoDB Connection (Replace with your Atlas or Local URI)
+spring.data.mongodb.uri=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/insureai?retryWrites=true&w=majority
+
+# Spring Security Default Basic Auth
+spring.security.user.name=admin
+spring.security.user.password=admin123
+
+server.port=9090
+
+# Spring Boot Actuator Monitoring
+management.endpoints.web.exposure.include=health,metrics,info
+management.endpoint.health.show-details=always
+management.metrics.export.simple.enabled=true
+
+# Admin Account / Mail Notifications (Use Gmail App Password)
+mail.username=your-email@gmail.com
+mail.password=your-app-password
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your-email@gmail.com
+spring.mail.password=your-app-password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.debug=false

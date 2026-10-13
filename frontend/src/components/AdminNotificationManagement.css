@@ -1,0 +1,223 @@
+.admin-notif-container {
+    padding: 20px;
+    color: #e2e8f0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-notif-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    background: rgba(30, 41, 59, 0.4);
+    padding: 20px 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.title-icon {
+    font-size: 2.5rem;
+    color: #3b82f6;
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));
+}
+
+.header-title h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-title p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.refresh-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 12px;
+    color: #60a5fa;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.refresh-btn:hover:not(:disabled) {
+    background: rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Grid Table */
+.notif-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notif-table-header {
+    display: grid;
+    grid-template-columns: 200px 200px 1fr 180px 80px;
+    padding: 15px 25px;
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.notif-card {
+    display: grid;
+    grid-template-columns: 200px 200px 1fr 180px 80px;
+    align-items: center;
+    padding: 18px 25px;
+    background: rgba(30, 41, 59, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    transition: all 0.2s ease;
+}
+
+.notif-card:hover {
+    background: rgba(30, 41, 59, 0.5);
+    transform: scale(1.01);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+.col-event {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.type-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.type-icon.success {
+    color: #10b981;
+}
+
+.type-icon.warning {
+    color: #f59e0b;
+}
+
+.type-icon.error {
+    color: #ef4444;
+}
+
+.type-icon.info {
+    color: #3b82f6;
+}
+
+.notif-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #f1f5f9;
+}
+
+.user-badge {
+    padding: 4px 10px;
+    background: rgba(148, 163, 184, 0.1);
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.col-message p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.col-time {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.delete-log-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: #475569;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.delete-log-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 100px 20px;
+    background: rgba(30, 41, 59, 0.2);
+    border-radius: 24px;
+    border: 2px dashed rgba(255, 255, 255, 0.05);
+}
+
+.empty-state svg {
+    font-size: 4rem;
+    color: #1e293b;
+    margin-bottom: 20px;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    color: #64748b;
+}
+
+@media (max-width: 1024px) {
+
+    .notif-table-header,
+    .notif-card {
+        grid-template-columns: 150px 150px 1fr 120px 50px;
+    }
+}
