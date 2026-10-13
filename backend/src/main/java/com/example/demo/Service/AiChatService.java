@@ -18,7 +18,6 @@ import reactor.core.publisher.Flux;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class AiChatService {
@@ -29,17 +28,20 @@ public class AiChatService {
     private final PolicyRepo policyRepo;
     private final PolicyOfferingRepo policyOfferingRepo;
     private final UserDTOREPO userRepo;
+    private final PolicyRagService policyRagService;
 
     public AiChatService(
             ChatClient chatClient,
             PolicyRepo policyRepo,
             PolicyOfferingRepo policyOfferingRepo,
-            UserDTOREPO userRepo
+            UserDTOREPO userRepo,
+            PolicyRagService policyRagService
     ) {
         this.chatClient = chatClient;
         this.policyRepo = policyRepo;
         this.policyOfferingRepo = policyOfferingRepo;
         this.userRepo = userRepo;
+        this.policyRagService = policyRagService;
     }
 
     public AiChatResponse chat(AiChatRequest request) {
@@ -48,11 +50,14 @@ public class AiChatService {
                 : UUID.randomUUID().toString();
 
         try {
-            String systemContext = buildSystemContext(request.getUserEmail());
+            // Retrieve semantically matching policy document clauses from VectorStore
+            PolicyRagService.RagResult rag = policyRagService.retrieveRelevantClauses(request.getMessage(), 3);
+
+            String systemContext = buildSystemContext(request.getUserEmail(), rag);
             String userPrompt = buildUserPrompt(request);
 
-            logger.info("Processing AI Chat request for conversationId: {}, userEmail: {}",
-                    conversationId, request.getUserEmail());
+            logger.info("Processing AI Chat request for conversationId: {}, userEmail: {}, citationsFound: {}",
+                    conversationId, request.getUserEmail(), rag.getCitations().size());
 
             String reply = chatClient.prompt()
                     .system(systemContext)
@@ -60,7 +65,9 @@ public class AiChatService {
                     .call()
                     .content();
 
-            return AiChatResponse.of(reply, conversationId);
+            AiChatResponse response = AiChatResponse.of(reply, conversationId);
+            response.setSources(rag.getCitations());
+            return response;
 
         } catch (Exception e) {
             logger.error("Error generating AI chat response: {}", e.getMessage(), e);
@@ -72,10 +79,12 @@ public class AiChatService {
 
     public Flux<String> streamChat(AiChatRequest request) {
         try {
-            String systemContext = buildSystemContext(request.getUserEmail());
+            PolicyRagService.RagResult rag = policyRagService.retrieveRelevantClauses(request.getMessage(), 3);
+            String systemContext = buildSystemContext(request.getUserEmail(), rag);
             String userPrompt = buildUserPrompt(request);
 
-            logger.info("Streaming AI Chat request for userEmail: {}", request.getUserEmail());
+            logger.info("Streaming AI Chat request for userEmail: {}, citationsFound: {}",
+                    request.getUserEmail(), rag.getCitations().size());
 
             return chatClient.prompt()
                     .system(systemContext)
@@ -89,7 +98,7 @@ public class AiChatService {
         }
     }
 
-    private String buildSystemContext(String userEmail) {
+    private String buildSystemContext(String userEmail, PolicyRagService.RagResult rag) {
         StringBuilder context = new StringBuilder("""
                 You are InsuAI Assistant, the flagship AI advisory agent for the InsurAI platform.
                 
@@ -107,11 +116,25 @@ public class AiChatService {
                 
                 Operational Rules:
                 1. Always prioritize user clarity and financial protection.
-                2. If the user has active policies or appointments, tailor your recommendations to complement their current portfolio.
+                2. When citing specific policy terms, waiting periods, limits, or exclusions from the verified knowledge base, mention the policy title and section name.
                 3. Direct users to the 'Agents' tab to book one-on-one appointments for formal policy issuance or claims processing.
                 4. Maintain a warm, authoritative, and professional tone.
                 """);
 
+        // RAG Context Injection
+        if (rag != null && rag.hasContext()) {
+            context.append("\n=== Verified Official Policy Knowledge Base (Retrieved via Vector Search) ===\n");
+            context.append(rag.getContextText());
+            context.append("""
+                    
+                    Instructions for Policy Grounding:
+                    - Ground your answers strictly on the verified clauses retrieved above.
+                    - State specific waiting periods, sub-limits, or rules accurately as defined in the retrieved text.
+                    - Explicitly cite the policy and section name when stating policy terms.
+                    """);
+        }
+
+        // Dynamic User Context from MongoDB
         if (userEmail != null && !userEmail.isBlank()) {
             context.append("\n=== Current User Profile ===\n");
             context.append("Email: ").append(userEmail).append("\n");
@@ -163,7 +186,6 @@ public class AiChatService {
 
         if (request.getHistory() != null && !request.getHistory().isEmpty()) {
             sb.append("Recent Conversation History:\n");
-            // Include up to last 8 turns
             int start = Math.max(0, request.getHistory().size() - 8);
             for (int i = start; i < request.getHistory().size(); i++) {
                 ChatMessageDTO msg = request.getHistory().get(i);

@@ -480,7 +480,8 @@ export const generateAIChatResponse = async (userMessage, history = [], userCont
     if (response.data && response.data.success) {
       return {
         success: true,
-        text: response.data.reply
+        text: response.data.reply,
+        sources: response.data.sources || []
       };
     } else {
       return {

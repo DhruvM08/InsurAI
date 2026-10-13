@@ -38,6 +38,7 @@ const Support = ({ messages, setMessages, userContext }) => {
       id: Date.now() + 1,
       type: 'bot',
       text: response.success ? response.text : response.message,
+      sources: response.sources || [],
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }]);
 
@@ -77,6 +78,16 @@ const Support = ({ messages, setMessages, userContext }) => {
               </div>
               <div className="chat-bubble">
                 <p className="chat-text">{msg.text}</p>
+                {msg.sources && msg.sources.length > 0 && (
+                  <div className="chat-sources">
+                    <span className="sources-title">📚 Verified Policy Sources:</span>
+                    <div className="sources-list">
+                      {msg.sources.map((src, idx) => (
+                        <span key={idx} className="source-pill">{src}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <span className="chat-time">{msg.timestamp}</span>
               </div>
             </div>
