@@ -45,6 +45,30 @@ const Support = ({ messages, setMessages, userContext }) => {
     setIsTyping(false);
   };
 
+  const sendQuickMessage = async (text) => {
+    if (isTyping) return;
+    const userMessage = {
+      id: Date.now(),
+      type: 'user',
+      text: text,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setIsTyping(true);
+
+    const response = await generateAIChatResponse(text, messages, userContext);
+
+    setMessages(prev => [...prev, {
+      id: Date.now() + 1,
+      type: 'bot',
+      text: response.success ? response.text : response.message,
+      sources: response.sources || [],
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    }]);
+
+    setIsTyping(false);
+  };
 
   return (
     <div className="ud-support-container">
@@ -52,7 +76,7 @@ const Support = ({ messages, setMessages, userContext }) => {
         <div className="ud-support-title-row">
           <div>
             <h1 className="ud-page-title">InsuAI Assistant</h1>
-            <p className="ud-page-subtitle">Your real-time insurance support partner.</p>
+            <p className="ud-page-subtitle">Your real-time insurance support partner with AI Tool Calling & RAG.</p>
           </div>
           <button
             className="ud-clear-chat-btn"
@@ -65,6 +89,22 @@ const Support = ({ messages, setMessages, userContext }) => {
             title="Clear Conversation"
           >
             <HiRefresh />
+          </button>
+        </div>
+
+        {/* Quick Action Suggestion Chips */}
+        <div className="ud-quick-actions">
+          <button type="button" className="quick-action-chip" onClick={() => sendQuickMessage("What is the status of my policies?")}>
+            📋 My Policy Status
+          </button>
+          <button type="button" className="quick-action-chip" onClick={() => sendQuickMessage("Calculate a $500,000 Term Life premium quote for a 30-year-old non-smoker")}>
+            💰 Quote: $500k Term Life
+          </button>
+          <button type="button" className="quick-action-chip" onClick={() => sendQuickMessage("Find certified Health insurance agents with upcoming availability")}>
+            👨‍💼 Find Health Agents
+          </button>
+          <button type="button" className="quick-action-chip" onClick={() => sendQuickMessage("What is the pre-existing disease waiting period for Health insurance?")}>
+            🏥 Health Policy RAG
           </button>
         </div>
       </div>
